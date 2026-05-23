@@ -50,7 +50,7 @@ rely on external software (CGFD3D, see https://github.com/zw-vis/gpu-CGFD3D).
 ```
 rtspg-3d-cvm-evaluation/
 ├── README.md                          ← this file
-├── LICENSE                            ← GPL v3 (add via GitHub UI)
+├── LICENSE                            ← GPL v3
 ├── scripts/
 │   ├── rtspg_pick_dt.m                ← main dt picking routine
 │   ├── analyze_dt_statistics.m        ← scatter + linear fit + radar chart
@@ -62,14 +62,32 @@ rtspg-3d-cvm-evaluation/
 │   ├── radarChart/                    ← slandarer (BSD)
 │   ├── wiggle/                        ← Hansen (GPL v2+)
 │   └── jetwr/                         ← Katzman
-└── data_example/                      ← example input (1 source point)
-    ├── StaX1.list                     ← ChinArray station coordinates
-    └── 179prefil_con/                 ← filtered RTSPG SAC files
-        ├── zhangcon5-10/*.sac
-        ├── zhangcon8-18/*.sac
-        ├── zhangcon15-35/*.sac
-        └── zhangcon20-45/*.sac
+└── data_example/                      ← sample data for source 179
+    ├── StaX1.list                     ← 263 ChinArray station coordinates
+    └── 179prefil_con/                 ← filtered RTSPG SAC traces
+        ├── yaocon5-10/    *.sac       ← SWChinaCVM-2.0,  5–10 s
+        ├── yaocon8-18/    *.sac       ← SWChinaCVM-2.0,  8–18 s
+        ├── yaocon15-35/   *.sac       ← SWChinaCVM-2.0, 15–35 s
+        ├── yaocon20-45/   *.sac       ← SWChinaCVM-2.0, 20–45 s
+        ├── zhangcon5-10/  *.sac       ← USTClitho2.0,    5–10 s
+        ├── zhangcon8-18/  *.sac       ← USTClitho2.0,    8–18 s
+        ├── zhangcon15-35/ *.sac       ← USTClitho2.0,   15–35 s
+        ├── zhangcon20-45/ *.sac       ← USTClitho2.0,   20–45 s
+        ├── baocon5-10/    *.sac       ← Bao20,           5–10 s
+        ├── baocon8-18/    *.sac       ← Bao20,           8–18 s
+        ├── baocon15-35/   *.sac       ← Bao20,          15–35 s
+        ├── baocon20-45/   *.sac       ← Bao20,          20–45 s
+        ├── fengcon5-10/   *.sac       ← Feng20,          5–10 s
+        ├── fengcon8-18/   *.sac       ← Feng20,          8–18 s
+        ├── fengcon15-35/  *.sac       ← Feng20,         15–35 s
+        └── fengcon20-45/  *.sac       ← Feng20,         20–45 s
 ```
+
+The repository ships with a complete sample data subset for source
+point 179 (all 4 velocity models × 4 period bands, ~4200 SAC files,
+~10 MB total). This is sufficient to fully reproduce all figures
+related to source 179. Data for the other five source points are
+available on Zenodo (see "Data availability" below).
 
 (The repository ships with one example source point; full data are available
 on Zenodo, see "Data availability" below.)
@@ -245,19 +263,24 @@ manuscript Methods section for a derivation.
 
 ## Data availability
 
-This repository ships with a minimal example dataset to verify the
-code runs end-to-end:
+This repository ships with a complete sample for one source point:
 
 - `data_example/StaX1.list` — 263 ChinArray Phase II station coordinates
-- `data_example/179prefil_con/zhangcon20-45/` *(if included)* — filtered
-  RTSPG SAC traces for source point 179, model USTClitho2.0 (`zhang`),
-  period band 20–45 s
+- `data_example/179prefil_con/` — filtered RTSPG SAC traces for source
+  point 179, covering all 4 candidate velocity models (SWChinaCVM-2.0,
+  USTClitho2.0, Bao20, Feng20) and all 4 period bands (5–10, 8–18,
+  15–35, 20–45 s) — approximately 4,200 SAC files, ~10 MB.
 
-The complete dataset (all 6 source points × 4 velocity models × 4 period
-bands, plus auxiliary files) is archived on Zenodo with DOI [TBD upon
-submission]. After downloading from Zenodo, extract the archive into
-`data_example/` so the directory structure matches the layout shown
-above, then run `scripts/run_example.m` or `scripts/run_analysis_example.m`.
+Running `scripts/run_example.m` with this sample reproduces all
+RTSPG dt picking outputs for source 179; running
+`scripts/run_analysis_example.m` reproduces the per-source statistics
+and radar chart for source 179.
+
+Data for the other five source points reported in the manuscript
+(60, 104, 142, 203, 246) are archived on Zenodo with DOI [TBD upon
+submission]. After downloading from Zenodo, extract the archive so the
+directory layout matches `<source_id>prefil_con/<model>con<band>/`,
+update the paths in `run_example.m`, and re-run.
 
 Raw ChinArray Phase II waveform data are available from the China
 Seismic Array Data Management Centre at the Institute of Geophysics,
